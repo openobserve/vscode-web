@@ -28,6 +28,21 @@ declare const window: any;
     config = tempConfig;
   }
 
+  let actionId = '';
+  window.location.search.split('?')[1].split('&').forEach((key: any) => {
+    const query = key.split('=');
+    if (query[0] === 'id') {
+      actionId = query[1];
+    }
+  });
+
+  if (actionId) {
+    config.folderUri = {
+      scheme: "memfs",
+      path: `/${actionId}`
+    };
+  }
+
   let workspace;
   if (config.folderUri) {
     workspace = { folderUri: URI.revive(config.folderUri) };

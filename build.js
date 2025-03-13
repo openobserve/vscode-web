@@ -20,7 +20,7 @@ function exec(cmd, opts) {
   return child_process.execSync(cmd, opts);
 }
 
-const requiredTools = ["node", "yarn", "git", "python"];
+const requiredTools = ["node", "yarn", "git", "python3"];
 note(`required tools ${JSON.stringify(requiredTools)}`);
 for (const tool of requiredTools) {
   try {
@@ -42,7 +42,7 @@ if (node_version < "v20.0") {
 if (!fs.existsSync("vscode")) {
   note("cloning vscode");
   exec(
-    `git clone --depth 1 https://github.com/microsoft/vscode.git -b ${vscodeVersion}`,
+    `git clone --depth 1 https://github.com/openobserve/vscode.git -b o2-actions-v2`,
     {
       stdio: "inherit",
     }
