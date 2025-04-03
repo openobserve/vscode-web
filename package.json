@@ -1,6 +1,6 @@
 {
   "name": "vscode-web",
-  "version": "1.92.0",
+  "version": "upstream/release/o2/1.92",
   "description": "Visual Studio Code for browser",
   "files": [
     "dist"
@@ -25,5 +25,48 @@
     "fs-extra": "^9.0.1"
   },
   "dependencies": {},
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447",
+  "ignoreExtensions": [
+    "clojure",
+    "coffeescript",
+    "cpp",
+    "csharp",
+    "css-language-features",
+    "css",
+    "dart",
+    "fsharp",
+    "git-base",
+    "git",
+    "github-authentication",
+    "github",
+    "go",
+    "groovy",
+    "html-language-features",
+    "html",
+    "jake",
+    "java",
+    "javascript",
+    "julia",
+    "less",
+    "lua",
+    "merge-conflict",
+    "microsoft-authentication",
+    "perl",
+    "php-language-features",
+    "php",
+    "r",
+    "ruby",
+    "rust",
+    "scss",
+    "swift",
+    "terminal-suggest",
+    "tunnel-forwarding",
+    "typescript-basics",
+    "typescript-language-features",
+    "vb",
+    "vscode-api-tests",
+    "vscode-colorize-perf-tests",
+    "vscode-colorize-tests",
+    "vscode-test-resolver"
+  ]
 }

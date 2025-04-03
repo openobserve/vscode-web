@@ -1,8 +1,6 @@
-import {
-  create
-} from "vs/workbench/workbench.web.main";
-import { URI, UriComponents } from "vs/base/common/uri";
-import { IWorkbenchConstructionOptions, IWorkspace, IWorkspaceProvider } from "vs/workbench/browser/web.api";
+import { create } from 'vs/workbench/workbench.web.main';
+import { URI, UriComponents } from 'vs/base/common/uri';
+import { IWorkbenchConstructionOptions, IWorkspace, IWorkspaceProvider } from 'vs/workbench/browser/web.api';
 declare const window: any;
 
 (async function () {
@@ -26,6 +24,26 @@ declare const window: any;
     tempConfig.additionalBuiltinExtensions =
       config.additionalBuiltinExtensions.map((ext) => URI.revive(ext));
     config = tempConfig;
+  }
+
+  let actionId = '';
+  let actionName = '';
+  window.location.search.split('?')[1].split('&').forEach((key: any) => {
+    const query = key.split('=');
+    if (query[0] === 'id') {
+      actionId = query[1];
+    }
+
+    if (query[0] === 'name') {
+      actionName = query[1];
+    }
+  });
+
+  if (actionId) {
+    config.folderUri = {
+      scheme: "memfs",
+      path: `/${actionName}`
+    };
   }
 
   let workspace;

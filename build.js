@@ -2,7 +2,8 @@ const process = require("process");
 const child_process = require("child_process");
 const fs = require("fs");
 const fse = require("fs-extra");
-const { version } = require("./package.json");
+const { version, ignoreExtensions } = require("./package.json");
+const path = require("path");
 
 const vscodeVersion = version.split("-")[0];
 
@@ -20,7 +21,7 @@ function exec(cmd, opts) {
   return child_process.execSync(cmd, opts);
 }
 
-const requiredTools = ["node", "yarn", "git", "python"];
+const requiredTools = ["node", "yarn", "git", "python3"];
 note(`required tools ${JSON.stringify(requiredTools)}`);
 for (const tool of requiredTools) {
   try {
@@ -42,7 +43,7 @@ if (node_version < "v20.0") {
 if (!fs.existsSync("vscode")) {
   note("cloning vscode");
   exec(
-    `git clone --depth 1 https://github.com/microsoft/vscode.git -b ${vscodeVersion}`,
+    `git clone --depth 1 https://github.com/openobserve/vscode.git -b ${vscodeVersion}`,
     {
       stdio: "inherit",
     }
@@ -74,6 +75,23 @@ fs.copyFileSync(
   "../workbench.ts",
   "src/vs/code/browser/workbench/workbench.ts"
 );
+
+function deleteDirectory(extension) {
+  const extensionPath = path.join(__dirname, 'vscode', 'extensions', extension);
+  if (fs.existsSync(extensionPath)) {
+      fs.rmdirSync(extensionPath, { recursive: true });
+      console.log(`Directory ${extensionPath} has been deleted.`);
+  } else {
+      console.log(`Directory ${extensionPath} does not exist.`);
+  }
+}
+
+// Delete extensions
+note("deleting extensions");
+// Iterate over the list of extensions and delete each one
+ignoreExtensions.forEach(extension => {
+  deleteDirectory(extension);
+});
 
 // Compile
 note("starting compile");
