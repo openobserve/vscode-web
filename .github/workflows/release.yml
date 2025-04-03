@@ -2,8 +2,15 @@ name: Release
 
 on:
   push:
+    branches:
+      - main
+      - master
     tags:
       - 'v*'
+  pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
@@ -18,22 +25,36 @@ jobs:
           node-version: '20.18.1'
           cache: 'yarn'
 
+      - name: Debug environment
+        run: |
+          echo "Current shell: $SHELL"
+          echo "Shell exists: $(which sh)"
+          echo "Directory structure:"
+          ls -la /
+          echo "Environment variables:"
+          env | sort
+
       - name: Install system dependencies
+        shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential libx11-dev libx11-xcb-dev libxkbfile-dev libnotify-bin libkrb5-dev
           sudo ln -sf /usr/bin/python3 /usr/bin/python
 
       - name: Install dependencies
+        shell: bash
         run: yarn install --frozen-lockfile
 
       - name: Build project
+        shell: bash
         run: yarn build
 
       - name: Prepare demo
+        shell: bash
         run: yarn prepare-demo
 
       - name: Create zip archive
+        shell: bash
         run: |
           mkdir -p release
           zip -r release/vscode-web.zip demo
@@ -45,6 +66,7 @@ jobs:
           path: release/vscode-web.zip
 
       - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
