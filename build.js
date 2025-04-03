@@ -2,7 +2,7 @@ const process = require("process");
 const child_process = require("child_process");
 const fs = require("fs");
 const fse = require("fs-extra");
-const { version } = require("./package.json");
+const { version, ignoreExtensions } = require("./package.json");
 const path = require("path");
 
 const vscodeVersion = version.split("-")[0];
@@ -39,50 +39,6 @@ if (node_version < "v20.0") {
   error(`Want node > 20. Got "${node_version}"`);
   process.exit(1);
 }
-
-const extensionsToDelete = [
-  "clojure",
-  "coffeescript",
-  "cpp",
-  "csharp",
-  "css-language-features",
-  "css",
-  "dart",
-  "fsharp",
-  "git-base",
-  "git",
-  "github-authentication",
-  "github",
-  "go",
-  "groovy",
-  "html-language-features",
-  "html",
-  "jake",
-  "java",
-  "javascript",
-  "julia",
-  "less",
-  "lua",
-  "merge-conflict",
-  "microsoft-authentication",
-  "perl",
-  "php-language-features",
-  "php",
-  "r",
-  "ruby",
-  "rust",
-  "scss",
-  "swift",
-  "terminal-suggest",
-  "tunnel-forwarding",
-  "typescript-basics",
-  "typescript-language-features",
-  "vb",
-  "vscode-api-tests",
-  "vscode-colorize-perf-tests",
-  "vscode-colorize-tests",
-  "vscode-test-resolver",
-]
 
 if (!fs.existsSync("vscode")) {
   note("cloning vscode");
@@ -133,7 +89,7 @@ function deleteDirectory(extension) {
 // Delete extensions
 note("deleting extensions");
 // Iterate over the list of extensions and delete each one
-extensionsToDelete.forEach(extension => {
+ignoreExtensions.forEach(extension => {
   deleteDirectory(extension);
 });
 
