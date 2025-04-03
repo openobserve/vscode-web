@@ -15,6 +15,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,29 +36,39 @@ jobs:
           ls -la /
           echo "Environment variables:"
           env | sort
+          echo "Available shells:"
+          cat /etc/shells || echo "Cannot read /etc/shells"
+          echo "Testing shell execution:"
+          bash -c "echo 'Bash works'"
+          sh -c "echo 'Sh works'" || echo "Sh does not work"
 
       - name: Install system dependencies
-        shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential libx11-dev libx11-xcb-dev libxkbfile-dev libnotify-bin libkrb5-dev
           sudo ln -sf /usr/bin/python3 /usr/bin/python
+          echo "Verifying shell after installation:"
+          which sh
+          ls -la /bin/sh
 
       - name: Install dependencies
-        shell: bash
-        run: yarn install --frozen-lockfile
+        run: |
+          echo "Using shell: $SHELL"
+          yarn install --frozen-lockfile
 
       - name: Build project
-        shell: bash
-        run: yarn build
+        run: |
+          echo "Using shell: $SHELL"
+          yarn build
 
       - name: Prepare demo
-        shell: bash
-        run: yarn prepare-demo
+        run: |
+          echo "Using shell: $SHELL"
+          yarn prepare-demo
 
       - name: Create zip archive
-        shell: bash
         run: |
+          echo "Using shell: $SHELL"
           mkdir -p release
           zip -r release/vscode-web.zip demo
 
