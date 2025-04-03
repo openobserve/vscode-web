@@ -67,7 +67,7 @@ jobs:
         run: |
           echo "Using shell: $SHELL"
           # Run the build script directly
-          node build.js
+          yarn build
 
       - name: Prepare demo
         run: |
