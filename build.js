@@ -56,6 +56,24 @@ if (!fs.existsSync("vscode")) {
 note("changing directory to vscode");
 process.chdir("vscode");
 
+
+function deleteDirectory(extension) {
+  const extensionPath = path.join(__dirname, 'vscode', 'extensions', extension);
+  if (fs.existsSync(extensionPath)) {
+      fs.rmdirSync(extensionPath, { recursive: true });
+      console.log(`Directory ${extensionPath} has been deleted.`);
+  } else {
+      console.log(`Directory ${extensionPath} does not exist.`);
+  }
+}
+
+// Delete extensions
+note("deleting extensions");
+// Iterate over the list of extensions and delete each one
+ignoreExtensions.forEach(extension => {
+  deleteDirectory(extension);
+});
+
 if (!fs.existsSync("node_modules")) {
   exec("yarn", {
     stdio: "inherit",
@@ -75,23 +93,6 @@ fs.copyFileSync(
   "../workbench.ts",
   "src/vs/code/browser/workbench/workbench.ts"
 );
-
-function deleteDirectory(extension) {
-  const extensionPath = path.join(__dirname, 'vscode', 'extensions', extension);
-  if (fs.existsSync(extensionPath)) {
-      fs.rmdirSync(extensionPath, { recursive: true });
-      console.log(`Directory ${extensionPath} has been deleted.`);
-  } else {
-      console.log(`Directory ${extensionPath} does not exist.`);
-  }
-}
-
-// Delete extensions
-note("deleting extensions");
-// Iterate over the list of extensions and delete each one
-ignoreExtensions.forEach(extension => {
-  deleteDirectory(extension);
-});
 
 // Compile
 note("starting compile");
