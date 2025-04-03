@@ -1,9 +1,10 @@
-name: Release
+name: Build
 
 on:
-  push:
-    tags:
-      - 'v*'
+  pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
   build:
@@ -17,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           registry-url: https://registry.npmjs.org/
 
       - name: Install system dependencies
@@ -33,14 +34,3 @@ jobs:
 
       - name: Prepare demo
         run: yarn prepare-demo
-
-      - name: Create zip archive
-        run: |
-          mkdir -p release
-          zip -r release/vscode-web.zip demo
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v4
-        with:
-          files: release/vscode-web.zip
-          token: ${{ secrets.GITHUB_TOKEN }}
