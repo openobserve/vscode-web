@@ -21,7 +21,7 @@ function exec(cmd, opts) {
   return child_process.execSync(cmd, opts);
 }
 
-const requiredTools = ["node", "yarn", "git", "python3"];
+const requiredTools = ["node", "yarn", "git", "python"];
 note(`required tools ${JSON.stringify(requiredTools)}`);
 for (const tool of requiredTools) {
   try {

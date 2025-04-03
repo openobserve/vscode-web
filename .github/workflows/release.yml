@@ -18,6 +18,12 @@ jobs:
           node-version: '20.18.1'
           cache: 'yarn'
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential
+          sudo ln -sf /usr/bin/python3 /usr/bin/python
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
