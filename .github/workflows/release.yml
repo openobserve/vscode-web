@@ -21,13 +21,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            zip git python3 make g++ build-essential \
-            libkrb5-dev libx11-dev libxkbfile-dev \
-            libsecret-1-dev libnss3-dev libatk1.0-dev libatk-bridge2.0-dev \
-            libcups2-dev libdrm2-dev libxkbcommon-dev libxcomposite-dev \
-            libxdamage-dev libxfixes-dev libxrandr-dev libgbm-dev \
-            libasound2-dev libpango1.0-dev libcairo2-dev
+          sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential libx11-dev libx11-xcb-dev libxkbfile-dev libnotify-bin libkrb5-dev
           sudo ln -sf /usr/bin/python3 /usr/bin/python
 
       - name: Install dependencies
