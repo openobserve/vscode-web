@@ -3,26 +3,27 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'  # Runs only on version tags like v1.0.0
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.18.1'
-          cache: 'yarn'
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+          cache: 'yarn'  # Cache dependencies for faster builds
 
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential libx11-dev libx11-xcb-dev libxkbfile-dev libnotify-bin libkrb5-dev
-          sudo ln -sf /usr/bin/python3 /usr/bin/python
+          sudo apt-get install -y build-essential g++ libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev python-is-python3
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -36,20 +37,10 @@ jobs:
       - name: Create zip archive
         run: |
           mkdir -p release
-          zip -r release/vscode-web.zip demo
-
-      - name: Upload release artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: vscode-web-release
-          path: release/vscode-web.zip
+          zip -r release/vscode-web.zip demo  # Change `demo` if build output is elsewhere
 
       - name: Create GitHub Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v4
         with:
           files: release/vscode-web.zip
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}

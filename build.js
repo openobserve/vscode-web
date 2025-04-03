@@ -18,14 +18,21 @@ function note(msg) {
 }
 function exec(cmd, opts) {
   console.info("\x1b[36m%s\x1b[0m", cmd);
-  return child_process.execSync(cmd, opts);
+  console.info("\x1b[36m%s\x1b[0m", cmd);
+  try {
+    return child_process.execSync(cmd, { ...opts, shell: '/bin/bash' });
+  } catch (error) {
+    console.error("Error executing command:", cmd);
+    console.error(error.message);
+    process.exit(1);
+  }
 }
 
 const requiredTools = ["node", "yarn", "git", "python"];
 note(`required tools ${JSON.stringify(requiredTools)}`);
 for (const tool of requiredTools) {
   try {
-    child_process.execSync(`${tool} --version`, { stdio: "ignore" });
+    child_process.execSync(`${tool} --version`, { stdio: "ignore", shell: '/bin/bash' });
   } catch (e) {
     error(`"${tool}" is not available.`);
     process.exit(1);
@@ -33,7 +40,7 @@ for (const tool of requiredTools) {
 }
 ok("required tools installed");
 
-const node_version_out = child_process.execSync(`node -v`);
+const node_version_out = child_process.execSync(`node -v`, { shell: '/bin/bash' });
 const node_version = node_version_out.toString().trim();
 if (node_version < "v20.0") {
   error(`Want node > 20. Got "${node_version}"`);
