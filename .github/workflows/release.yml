@@ -3,13 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'  # Runs only on version tags like v1.0.0
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,6 +18,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+          cache: 'yarn'  # Cache dependencies for faster builds
 
       - name: Install system dependencies
         run: |
@@ -26,7 +26,7 @@ jobs:
           sudo apt-get install -y build-essential g++ libx11-dev libxkbfile-dev libsecret-1-dev libkrb5-dev python-is-python3
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install --frozen-lockfile
 
       - name: Build project
         run: yarn build
@@ -37,7 +37,7 @@ jobs:
       - name: Create zip archive
         run: |
           mkdir -p release
-          zip -r release/vscode-web.zip demo
+          zip -r release/vscode-web.zip demo  # Change `demo` if build output is elsewhere
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v4
