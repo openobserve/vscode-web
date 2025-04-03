@@ -21,7 +21,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential
+          sudo apt-get install -y --no-install-recommends zip git python3 make g++ build-essential libkrb5-dev
           sudo ln -sf /usr/bin/python3 /usr/bin/python
 
       - name: Install dependencies
