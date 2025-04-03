@@ -40,7 +40,7 @@ jobs:
           zip -r release/vscode-web.zip demo  # Change `demo` if build output is elsewhere
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v4
+        uses: softprops/action-gh-release@v2
         with:
           files: release/vscode-web.zip
           token: ${{ secrets.GITHUB_TOKEN }}
