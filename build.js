@@ -18,7 +18,14 @@ function note(msg) {
 }
 function exec(cmd, opts) {
   console.info("\x1b[36m%s\x1b[0m", cmd);
-  return child_process.execSync(cmd, { ...opts, shell: '/bin/bash' });
+  console.info("\x1b[36m%s\x1b[0m", cmd);
+  try {
+    return child_process.execSync(cmd, { ...opts, shell: '/bin/bash' });
+  } catch (error) {
+    console.error("Error executing command:", cmd);
+    console.error(error.message);
+    process.exit(1);
+  }
 }
 
 const requiredTools = ["node", "yarn", "git", "python"];
