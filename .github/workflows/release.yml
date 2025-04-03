@@ -15,9 +15,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,20 +24,6 @@ jobs:
         with:
           node-version: '20'
           registry-url: https://registry.npmjs.org/
-
-      - name: Debug environment
-        run: |
-          echo "Current shell: $SHELL"
-          echo "Shell exists: $(which sh)"
-          echo "Directory structure:"
-          ls -la /
-          echo "Environment variables:"
-          env | sort
-          echo "Available shells:"
-          cat /etc/shells || echo "Cannot read /etc/shells"
-          echo "Testing shell execution:"
-          bash -c "echo 'Bash works'"
-          sh -c "echo 'Sh works'" || echo "Sh does not work"
 
       - name: Install system dependencies
         run: |
@@ -52,31 +35,16 @@ jobs:
           ls -la /bin/sh
 
       - name: Install dependencies
-        run: |
-          echo "Using shell: $SHELL"
-          yarn install --frozen-lockfile
-
-      - name: Create symbolic link for sh
-        run: |
-          echo "Creating symbolic link for sh"
-          sudo ln -sf /bin/bash /bin/sh
-          echo "Verifying sh link:"
-          ls -la /bin/sh
+        run: yarn
 
       - name: Build project
-        run: |
-          echo "Using shell: $SHELL"
-          # Run the build script directly
-          yarn build
+        run: yarn build
 
       - name: Prepare demo
-        run: |
-          echo "Using shell: $SHELL"
-          yarn prepare-demo
+        run: yarn prepare-demo
 
       - name: Create zip archive
         run: |
-          echo "Using shell: $SHELL"
           mkdir -p release
           zip -r release/vscode-web.zip demo
 
@@ -87,7 +55,6 @@ jobs:
           path: release/vscode-web.zip
 
       - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
