@@ -3,6 +3,7 @@ const child_process = require("child_process");
 const fs = require("fs");
 const fse = require("fs-extra");
 const { version } = require("./package.json");
+const path = require("path");
 
 const vscodeVersion = version.split("-")[0];
 
@@ -39,10 +40,54 @@ if (node_version < "v20.0") {
   process.exit(1);
 }
 
+const extensionsToDelete = [
+  "clojure",
+  "coffeescript",
+  "cpp",
+  "csharp",
+  "css-language-features",
+  "css",
+  "dart",
+  "fsharp",
+  "git-base",
+  "git",
+  "github-authentication",
+  "github",
+  "go",
+  "groovy",
+  "html-language-features",
+  "html",
+  "jake",
+  "java",
+  "javascript",
+  "julia",
+  "less",
+  "lua",
+  "merge-conflict",
+  "microsoft-authentication",
+  "perl",
+  "php-language-features",
+  "php",
+  "r",
+  "ruby",
+  "rust",
+  "scss",
+  "swift",
+  "terminal-suggest",
+  "tunnel-forwarding",
+  "typescript-basics",
+  "typescript-language-features",
+  "vb",
+  "vscode-api-tests",
+  "vscode-colorize-perf-tests",
+  "vscode-colorize-tests",
+  "vscode-test-resolver",
+]
+
 if (!fs.existsSync("vscode")) {
   note("cloning vscode");
   exec(
-    `git clone --depth 1 https://github.com/openobserve/vscode.git -b o2-actions-v2`,
+    `git clone --depth 1 https://github.com/openobserve/vscode.git -b ${vscodeVersion}`,
     {
       stdio: "inherit",
     }
@@ -74,6 +119,23 @@ fs.copyFileSync(
   "../workbench.ts",
   "src/vs/code/browser/workbench/workbench.ts"
 );
+
+function deleteDirectory(extension) {
+  const extensionPath = path.join(__dirname, 'vscode', 'extensions', extension);
+  if (fs.existsSync(extensionPath)) {
+      fs.rmdirSync(extensionPath, { recursive: true });
+      console.log(`Directory ${extensionPath} has been deleted.`);
+  } else {
+      console.log(`Directory ${extensionPath} does not exist.`);
+  }
+}
+
+// Delete extensions
+note("deleting extensions");
+// Iterate over the list of extensions and delete each one
+extensionsToDelete.forEach(extension => {
+  deleteDirectory(extension);
+});
 
 // Compile
 note("starting compile");

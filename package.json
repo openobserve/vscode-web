@@ -1,6 +1,6 @@
 {
   "name": "vscode-web",
-  "version": "1.92.0",
+  "version": "upstream/release/o2/1.92",
   "description": "Visual Studio Code for browser",
   "files": [
     "dist"
