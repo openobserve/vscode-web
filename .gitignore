@@ -112,3 +112,8 @@ demo/favicon.ico
 demo/manifest.json
 demo/playground.js
 events.json
+o2-vscode-web/static
+o2-vscode-web/code-*
+o2-vscode-web/favicon.ico
+o2-vscode-web/manifest.json
+o2-vscode-web/playground.js

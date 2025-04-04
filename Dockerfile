@@ -22,4 +22,4 @@ COPY . .
 RUN yarn build
 
 # Prepare the demo
-RUN yarn prepare-demo
+RUN yarn o2-prepare-demo

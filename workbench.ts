@@ -14,7 +14,7 @@ declare const window: any;
   if (window.product) {
     config = window.product;
   } else {
-    const result = await fetch("product.json");
+    const result = await fetch("vscode/product.json");
     config = await result.json();
   }
 

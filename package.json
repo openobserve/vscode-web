@@ -8,7 +8,8 @@
   "scripts": {
     "build": "node build.js",
     "prepare-demo": "node prepare-demo.js",
-    "demo": "node ./demo/http.js"
+    "demo": "node ./demo/http.js",
+    "o2-prepare-demo": "node o2-prepare-demo.js"
   },
   "repository": {
     "type": "git",
