@@ -37,7 +37,7 @@ jobs:
       - name: Create zip archive
         run: |
           mkdir -p release
-          zip -r release/vscode-web.zip demo  # Change `demo` if build output is elsewhere
+          zip -r release/vscode-web.zip o2-vscode-web  # Change `o2-vscode-web` if build output is elsewhere
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
