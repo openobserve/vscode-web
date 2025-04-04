@@ -11,6 +11,6 @@ fse.copySync("./dist/node_modules", "./o2-vscode-web/static/node_modules");
 fse.copySync("./dist/out", "./o2-vscode-web/static/out");
 fse.copySync("./dist", "./o2-vscode-web", { recursive: true, filter: (src) => !src.includes("extensions") && !src.includes("node_modules") && !src.includes("out") && !src.includes("package.json") });
 
-const webPlaygroundPath = './o2-vscode/static/extensions/openobserve-vscode-playground';
+const webPlaygroundPath = './o2-vscode-web/static/extensions/openobserve-vscode-playground';
 
 child_process.execSync(`git clone https://github.com/openobserve/actions-vscode-extension.git -b feat/file-system-provider  ${webPlaygroundPath}`, {stdio: 'inherit'});
