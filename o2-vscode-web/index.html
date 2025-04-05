@@ -8,7 +8,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Code" />
-    <link rel="apple-touch-icon" href="vscode-web/code-192.png" />
+    <link rel="apple-touch-icon" href="vscode/code-192.png" />
 
     <!-- Disable pinch zooming -->
     <meta
@@ -17,28 +17,28 @@
     />
 
     <!-- Workbench Icon/Manifest/CSS -->
-    <link rel="icon" href="vscode-web/favicon.ico" type="image/x-icon" />
-    <link rel="manifest" href="vscode-web/manifest.json" />
+    <link rel="icon" href="vscode/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="vscode/manifest.json" />
     <link
       data-name="vs/workbench/workbench.web.main"
       rel="stylesheet"
-      href="vscode-web/static/out/vs/workbench/workbench.web.main.css"
+      href="vscode/static/out/vs/workbench/workbench.web.main.css"
     />
   </head>
 
   <body aria-label=""></body>
 
   <!-- Startup (do not modify order of script tags!) -->
-  <script src="vscode-web/static/out/vs/loader.js"></script>
-  <script src="vscode-web/static/out/vs/webPackagePaths.js"></script>
+  <script src="vscode/static/out/vs/loader.js"></script>
+  <script src="vscode/static/out/vs/webPackagePaths.js"></script>
   <script>
     Object.keys(self.webPackagePaths).map(function (key, index) {
       self.webPackagePaths[
         key
-      ] = `${window.location.origin}/web/vscode-web/static/node_modules/${key}/${self.webPackagePaths[key]}`;
+      ] = `${window.location.origin}/web/vscode/static/node_modules/${key}/${self.webPackagePaths[key]}`;
     });
     require.config({
-      baseUrl: `${window.location.origin}/web/vscode-web/static/out`,
+      baseUrl: `${window.location.origin}/web/vscode/static/out`,
       recordStats: true,
       trustedTypesPolicy: window.trustedTypes?.createPolicy("amdLoader", {
         createScriptURL(value) {
@@ -48,7 +48,7 @@
       paths: self.webPackagePaths,
     });
   </script>
-  <script src="vscode-web/static/out/nls.messages.js"></script>
-  <script src="vscode-web/static/out/vs/workbench/workbench.web.main.js"></script>
-  <script src="vscode-web/static/out/vs/code/browser/workbench/workbench.js"></script>
+  <script src="vscode/static/out/nls.messages.js"></script>
+  <script src="vscode/static/out/vs/workbench/workbench.web.main.js"></script>
+  <script src="vscode/static/out/vs/code/browser/workbench/workbench.js"></script>
 </html>
