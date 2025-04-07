@@ -22,7 +22,14 @@ declare const window: any;
     const tempConfig = { ...config };
 
     tempConfig.additionalBuiltinExtensions =
-      config.additionalBuiltinExtensions.map((ext) => URI.revive(ext));
+      config.additionalBuiltinExtensions.map((ext) => {
+        if (window.location.protocol === 'https:') {
+          ext.scheme = 'https';
+          ext.authority = window.location.host;
+          ext.path = "web/vscode/" + ext.path;
+        }
+        return URI.revive(ext);
+      });
     config = tempConfig;
   }
 

@@ -15,6 +15,7 @@
 	"additionalBuiltinExtensions": [
 		{
 			"scheme": "http",
+			"authority": "localhost:8080",
 			"path": "static/extensions/openobserve-vscode-playground"
 		}
 	]
