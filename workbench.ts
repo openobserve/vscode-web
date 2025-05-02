@@ -35,7 +35,11 @@ declare const window: any;
 
   let actionId = '';
   let actionName = '';
-  window.location.search.split('?')[1].split('&').forEach((key: any) => {
+  const url = new URL(window.location.href);
+  const encodedParam = url.searchParams.get('origin') || '';
+  const decodedParam = decodeURIComponent(encodedParam);
+
+  decodedParam.split('?')[1].split('&').forEach((key: any) => {
     const query = key.split('=');
     if (query[0] === 'id') {
       actionId = query[1];
