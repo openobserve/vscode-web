@@ -8,7 +8,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^5.2.1",
     "vscode-web": "^1.75.0"
   }
 }
